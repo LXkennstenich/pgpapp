@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DidiSoft.Pgp;
+using System;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using DidiSoft.Pgp;
 
 namespace PGPApp
 {
@@ -32,12 +23,12 @@ namespace PGPApp
             string password = PasswordBox.Text;
             string privatekey = new TextRange(PrivateKeyTextbox.Document.ContentStart, PrivateKeyTextbox.Document.ContentEnd).Text;
 
-            if(encryptedmessage == String.Empty)
+            if (encryptedmessage == String.Empty)
             {
                 MessageBox.Show("Keine Nachricht eingegeben");
             }
 
-            if(privatekey == String.Empty)
+            if (privatekey == String.Empty)
             {
                 MessageBox.Show("Keinen Private Key eingegeben");
             }
@@ -45,9 +36,9 @@ namespace PGPApp
             PGPLib pGPLib = new PGPLib();
             MemoryStream decrypted = new MemoryStream();
 
-            using(MemoryStream encryptedmessagestream = new MemoryStream(Encoding.UTF8.GetBytes(encryptedmessage)))
+            using (MemoryStream encryptedmessagestream = new MemoryStream(Encoding.UTF8.GetBytes(encryptedmessage)))
             {
-                using(MemoryStream privatekeystream = new MemoryStream(Encoding.UTF8.GetBytes(privatekey)))
+                using (MemoryStream privatekeystream = new MemoryStream(Encoding.UTF8.GetBytes(privatekey)))
                 {
                     string test = pGPLib.DecryptStream(encryptedmessagestream, privatekeystream, password, decrypted);
 
